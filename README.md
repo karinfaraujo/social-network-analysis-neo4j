@@ -1,5 +1,7 @@
 # Social Network Analysis using Neo4j
 
+![Project Preview](https://github.com/karinfaraujo/social-network-analysis-neo4j/blob/main/social-network-analysis-neo4j/images/graph-visualization-image.png?raw=true)
+
 ## Overview
 
 This project demonstrates how to analyze social network data using a graph database.
