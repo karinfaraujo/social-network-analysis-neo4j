@@ -75,7 +75,7 @@ REQUIRE p.postId IS UNIQUE;
 ### Import Users
 
 ```cypher
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/main/data/users.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/users.csv' AS row
 
 CREATE (:User {
 userId: toInteger(row.userId),
@@ -88,7 +88,7 @@ name: row.name
 ### Import Posts
 
 ```cypher
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/main/data/posts.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/posts.csv' AS row
 
 CREATE (:Post {
 postId: toInteger(row.postId),
@@ -101,7 +101,7 @@ content: row.content
 ### Import POSTED
 
 ```cypher
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/main/data/relationships.csv' AS row
+LOAD CSV WITH HEADERS FROM https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/relationships.csv AS row
 
 WITH row WHERE row.type = 'POSTED'
 
@@ -116,7 +116,7 @@ CREATE (u)-[:POSTED]->(p);
 ### Import LIKED
 
 ```cypher
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/main/data/relationships.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/relationships.csv' AS row
 
 WITH row WHERE row.type = 'LIKED'
 
@@ -131,7 +131,7 @@ CREATE (u)-[:LIKED]->(p);
 ### Import FOLLOWS
 
 ```cypher
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/main/data/relationships.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/relationships.csv' AS row
 
 WITH row WHERE row.type = 'FOLLOWS'
 
