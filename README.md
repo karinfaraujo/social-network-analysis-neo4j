@@ -14,12 +14,14 @@ The system models users, posts, and their relationships using Neo4j.
 
 * User
 * Post
+* Topic
 
 ### Relationships
 
 * POSTED
 * LIKED
 * FOLLOWS
+* HAS_TOPIC
 
 ---
 
