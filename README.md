@@ -101,7 +101,7 @@ content: row.content
 ### Import POSTED
 
 ```cypher
-LOAD CSV WITH HEADERS FROM https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/relationships.csv AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/relationships.csv' AS row
 
 WITH row WHERE row.type = 'POSTED'
 
