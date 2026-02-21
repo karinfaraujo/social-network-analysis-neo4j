@@ -1,228 +1,106 @@
-# Social Network Analysis with Neo4j
+# Social Network Analysis using Neo4j
 
-## Project Overview
+## Overview
 
-This project demonstrates how to use Neo4j graph database to analyze social network data.
+This project demonstrates how to analyze social network data using a graph database.
 
-The graph models:
+Graph databases allow efficient analysis of relationships between users, posts, and topics.
 
-* Users
-* Posts
-* Social relationships (follow, like, post)
+This prototype simulates a social media platform.
 
-This allows us to identify:
+---
 
-* Popular posts
-* Influential users
-* User recommendations
+## Technologies
+
+Neo4j AuraDB
+
+Cypher Query Language
+
+Graph Data Modeling
+
+Arrows.app
 
 ---
 
 ## Graph Model
 
-### Nodes
+Nodes:
 
 User
 
 Post
 
-### Relationships
+Topic
+
+Relationships:
+
+FOLLOWS
 
 POSTED
 
 LIKED
 
-FOLLOWS
+HAS_TOPIC
 
 ---
 
-## Dataset
+## Example Queries
 
-The dataset was created for learning purposes and includes:
-
-* 8 Users
-* 6 Posts
-* Follow relationships
-* Likes
-* Posts created by users
-
-Files:
-
-data/users.csv
-
-data/posts.csv
-
-data/relationships.csv
-
----
-
-## Constraints
+### Most Popular Users
 
 ```cypher
-CREATE CONSTRAINT user_id IF NOT EXISTS
-FOR (u:User)
-REQUIRE u.userId IS UNIQUE;
+MATCH (u:User)<-[:FOLLOWS]-(f)
 
-CREATE CONSTRAINT post_id IF NOT EXISTS
-FOR (p:Post)
-REQUIRE p.postId IS UNIQUE;
-```
+RETURN
 
----
-
-## Import Data
-
-### Import Users
-
-```cypher
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/users.csv' AS row
-
-CREATE (:User {
-userId: toInteger(row.userId),
-name: row.name
-});
-```
-
----
-
-### Import Posts
-
-```cypher
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/posts.csv' AS row
-
-CREATE (:Post {
-postId: toInteger(row.postId),
-content: row.content
-});
-```
-
----
-
-### Import POSTED
-
-```cypher
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/relationships.csv' AS row
-
-WITH row WHERE row.type = 'POSTED'
-
-MATCH (u:User {userId: toInteger(row.userId)})
-MATCH (p:Post {postId: toInteger(row.postId)})
-
-CREATE (u)-[:POSTED]->(p);
-```
-
----
-
-### Import LIKED
-
-```cypher
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/relationships.csv' AS row
-
-WITH row WHERE row.type = 'LIKED'
-
-MATCH (u:User {userId: toInteger(row.userId)})
-MATCH (p:Post {postId: toInteger(row.postId)})
-
-CREATE (u)-[:LIKED]->(p);
-```
-
----
-
-### Import FOLLOWS
-
-```cypher
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/refs/heads/main/social-network-analysis-neo4j/data/relationships.csv' AS row
-
-WITH row WHERE row.type = 'FOLLOWS'
-
-MATCH (u1:User {userId: toInteger(row.userId)})
-MATCH (u2:User {userId: toInteger(row.postId)})
-
-CREATE (u1)-[:FOLLOWS]->(u2);
-```
-
----
-
-## Queries
-
----
-
-### Most Popular Posts
-
-```cypher
-PROFILE
-
-MATCH (p:Post)<-[l:LIKED]-()
-
-RETURN p.content, COUNT(l) AS likes
-
-ORDER BY likes DESC
-```
-
----
-
-### Most Influential Users
-
-```cypher
-PROFILE
-
-MATCH (u:User)<-[f:FOLLOWS]-()
-
-RETURN u.name, COUNT(f) AS followers
+u.name,
+COUNT(f) AS followers
 
 ORDER BY followers DESC
 ```
 
 ---
 
-### User Recommendation
+### Most Popular Posts
 
 ```cypher
-PROFILE
+MATCH (p:Post)<-[:LIKED]-(u)
 
-MATCH (u:User)-[:FOLLOWS]->(friend)-[:FOLLOWS]->(recommended)
+RETURN
 
-WHERE u <> recommended
-AND NOT (u)-[:FOLLOWS]->(recommended)
+p.content,
+COUNT(u) AS likes
 
-RETURN u.name, recommended.name
+ORDER BY likes DESC
 ```
 
 ---
 
-### Show Graph
+### Common Interests
 
 ```cypher
-MATCH (n)-[r]->(m)
+MATCH (u1:User)-[:LIKED]->(p:Post)<-[:LIKED]-(u2:User)
 
-RETURN n,r,m
+WHERE u1 <> u2
+
+RETURN
+
+u1.name,
+u2.name,
+COUNT(p)
 ```
 
 ---
 
-## Performance
+## Skills Demonstrated
 
-To inspect performance:
+Graph Database Modeling
 
-```cypher
-SHOW CONSTRAINTS
-```
+Cypher Queries
 
-and
+Social Network Analysis
 
-```cypher
-PROFILE
-```
-
----
-
-## Tools Used
-
-Neo4j AuraDB
-
-Cypher
-
-Arrows.app
+Constraints and Query Optimization
 
 ---
 
@@ -230,4 +108,6 @@ Arrows.app
 
 Karin Araujo
 
-Data Analyst
+Data Analytics Portfolio Project
+
+Brazil
