@@ -75,7 +75,7 @@ REQUIRE p.postId IS UNIQUE;
 ### Import Users
 
 ```cypher
-LOAD CSV WITH HEADERS FROM 'LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/main/data/users.csv' AS row
+LOAD CSV WITH HEADERS FROM LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/karinfaraujo/social-network-analysis-neo4j/main/data/users.csv' AS row
 
 CREATE (:User {
 userId: toInteger(row.userId),
